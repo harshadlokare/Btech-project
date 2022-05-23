@@ -8,26 +8,28 @@ import SangliPuneData from "./data/sangli-pune.json";
 
 import leafRed from "./assets/leaf-red.png";
 import leafShadow from "./assets/leaf-shadow.png";
-import Route from "./frontend/route";
+import Route from "./frontend/Route";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
 function App(props) {
 
   const {BaseLayer} = LayersControl;
-  const [location, setLocation] = useState(DharurKaijData.DK[0].geometry);
-  const [location1, setLocation1] = useState(SangliMirajData.SM[0].geometry);
-  const [location2, setLocation2] = useState(SangliPuneData.SP[0].geometry);
+  //get data from json file
+  const [DKloc, setDKloc] = useState(DharurKaijData.DK[0].geometry);
+  const [SMloc, setSMloc] = useState(SangliMirajData.SM[0].geometry);
+  const [SPloc, setSPloc] = useState(SangliPuneData.SP[0].geometry);
 
-
-
+  //set source and destination field in string format
   const[source,setSource]=useState("");
   const[destination,setDestination]=useState("");
 
+  // show map corresponding to inputs
   const[showDKMap,setShowDKMap] = useState(false);
   const[showSMMap,setShowSMMap] = useState(false);
   const[showSPMap,setShowSPMap] = useState(false);
 
+  //show map button handler function
   function buttonHandler(){
     if(source=="sangli" && destination=="miraj"){
       console.log("Its matched Sangli-Miraj ROute!!!!!!!!!!!!!!");
@@ -44,6 +46,7 @@ function App(props) {
     }
   }
 
+
   const sourceHandler=(e)=>{
     setSource(e);
   }
@@ -52,21 +55,15 @@ function App(props) {
     setDestination(e);
   }
 
-  
-  
-  
-
-  return (
-    
-      
+  return (      
     <div className="App">
     <h2 class="headline">Drive safe by knowing these accident prone locations...</h2>
       <Route onButtonClick={buttonHandler} onTakeSource={sourceHandler} onTakeDestination={destinationHandler}></Route>
 
-    <div class="mapDiv">
-      {showDKMap && <MapContainer
+   <div class="mapDiv">
+          {showDKMap && <MapContainer
             className="map"
-            center={[location.coordinates[0][1], location.coordinates[0][0]]}
+            center={[DKloc.coordinates[0][1], DKloc.coordinates[0][0]]}
             zoom={13}
             scrollWheelZoom={true}
           >
@@ -88,7 +85,7 @@ function App(props) {
             </BaseLayer>
 
             {
-              location.coordinates.map((coordinate, index) => {
+              DKloc.coordinates.map((coordinate, index) => {
                 return (
                   <Marker
                     key={index}
@@ -119,7 +116,7 @@ function App(props) {
 
           {showSMMap && <MapContainer
             className="map"
-            center={[location1.coordinates[0][1], location1.coordinates[0][0]]}
+            center={[SMloc.coordinates[0][1], SMloc.coordinates[0][0]]}
             zoom={13}
             scrollWheelZoom={true}
           >
@@ -141,7 +138,7 @@ function App(props) {
             </BaseLayer>
 
             {
-              location1.coordinates.map((coordinate, index) => {
+              SMloc.coordinates.map((coordinate, index) => {
                 return (
                   <Marker
                     key={index}
@@ -167,7 +164,7 @@ function App(props) {
 
             {showSPMap && <MapContainer
             className="map"
-            center={[location2.coordinates[8][1], location2.coordinates[8][0]]}
+            center={[SPloc.coordinates[8][1], SPloc.coordinates[8][0]]}
             zoom={13}
             scrollWheelZoom={true}
           >
@@ -189,7 +186,7 @@ function App(props) {
             </BaseLayer>
 
             {
-              location2.coordinates.map((coordinate, index) => {
+              SPloc.coordinates.map((coordinate, index) => {
                 return (
                   <Marker
                     key={index}
