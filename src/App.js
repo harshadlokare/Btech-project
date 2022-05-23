@@ -8,7 +8,7 @@ import SangliPuneData from "./data/sangli-pune.json";
 
 import leafRed from "./assets/leaf-red.png";
 import leafShadow from "./assets/leaf-shadow.png";
-import Route from "./frontend/Route";
+import Route from "./frontend/route";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -16,9 +16,9 @@ function App(props) {
 
   const {BaseLayer} = LayersControl;
   //get data from json file
-  const [DKloc, setDKloc] = useState(DharurKaijData.DK[0].geometry);
-  const [SMloc, setSMloc] = useState(SangliMirajData.SM[0].geometry);
-  const [SPloc, setSPloc] = useState(SangliPuneData.SP[0].geometry);
+  const [location, setLocation] = useState(DharurKaijData.DK[0].geometry);
+  const [location1, setLocation2] = useState(SangliMirajData.SM[0].geometry);
+  const [location3, setLocation3] = useState(SangliPuneData.SP[0].geometry);
 
   //set source and destination field in string format
   const[source,setSource]=useState("");
@@ -63,7 +63,7 @@ function App(props) {
    <div class="mapDiv">
           {showDKMap && <MapContainer
             className="map"
-            center={[DKloc.coordinates[0][1], DKloc.coordinates[0][0]]}
+            center={[location.coordinates[0][1], location.coordinates[0][0]]}
             zoom={13}
             scrollWheelZoom={true}
           >
@@ -85,7 +85,7 @@ function App(props) {
             </BaseLayer>
 
             {
-              DKloc.coordinates.map((coordinate, index) => {
+              location.coordinates.map((coordinate, index) => {
                 return (
                   <Marker
                     key={index}
@@ -116,7 +116,7 @@ function App(props) {
 
           {showSMMap && <MapContainer
             className="map"
-            center={[SMloc.coordinates[0][1], SMloc.coordinates[0][0]]}
+            center={[location2.coordinates[0][1], location2.coordinates[0][0]]}
             zoom={13}
             scrollWheelZoom={true}
           >
@@ -138,7 +138,7 @@ function App(props) {
             </BaseLayer>
 
             {
-              SMloc.coordinates.map((coordinate, index) => {
+              location2.coordinates.map((coordinate, index) => {
                 return (
                   <Marker
                     key={index}
@@ -164,7 +164,7 @@ function App(props) {
 
             {showSPMap && <MapContainer
             className="map"
-            center={[SPloc.coordinates[8][1], SPloc.coordinates[8][0]]}
+            center={[location3.coordinates[8][1], location3.coordinates[8][0]]}
             zoom={13}
             scrollWheelZoom={true}
           >
@@ -186,7 +186,7 @@ function App(props) {
             </BaseLayer>
 
             {
-              SPloc.coordinates.map((coordinate, index) => {
+              location3.coordinates.map((coordinate, index) => {
                 return (
                   <Marker
                     key={index}
